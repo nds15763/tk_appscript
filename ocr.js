@@ -1,7 +1,8 @@
-var OCRAPI = {};
+var ocrAPI = {};
 var MLKitOCR = $plugins.load('org.autojs.autojspro.plugin.mlkit.ocr');
+var isAccess = false;
 
-OCRAPI.Init() = function(){
+ocrAPI.Init = function(){
     //MLKitOCR
     let ocr = new MLKitOCR();
     if (!isAccess){
@@ -11,4 +12,4 @@ OCRAPI.Init() = function(){
 }
 
 
-module.exports = OCRAPI;
+module.exports = ocrAPI;
