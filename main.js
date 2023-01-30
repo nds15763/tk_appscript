@@ -62,13 +62,13 @@ function openTiktok() {
 function selectVideo(count) {
     if (dM.search("Pixel 3") != -1) {
         //添加视频内容
-        selectVideoPixel3(video);
+        selectVideoPixel3(count);
     } else if (dM.search("Pixel 4") != -1) {
         //添加视频内容
-        selectVideoPixel4(video);
+        selectVideoPixel4(count);
     } else {
         //添加视频内容
-        selectVideoOther(video);
+        selectVideoOther(count);
     }
 }
 
@@ -81,7 +81,7 @@ function addVideoContent(video) {
         addVideoContentPixel4(video);
     } else {
         //添加视频内容
-        addVideoContent(video);
+        addVideoContentOther(video);
     }
 }
 
@@ -335,13 +335,13 @@ function addVideoContentPixel3(video) {
     sleep(2000);
 
     toast('设置音乐');
-    musicAPI.setMusic();
+    musicAPI.setMusic(ocr);
     sleep(5000);
 }
 
 
 //添加视频内容
-function addVideoContent(video) {
+function addVideoContentOther(video) {
 
     //点击文案按键
     click(960, 420);
@@ -384,7 +384,7 @@ function addVideoContent(video) {
     sleep(2000);
 
     toast('设置音乐');
-    musicAPI.setMusic();
+    musicAPI.setMusic(ocr);
     sleep(5000);
 }
 
@@ -435,8 +435,14 @@ function addVideoContentPixel4(video) {
     toast('点击完成');
     sleep(2000);
 
+    //pixel4可能会在编辑完文案后弹出一个继续编辑得框，需要点击空白刷下去
+    click(50, 350);
+    console.log('点击空白');
+    toast('点击完成');
+    sleep(2000);
+
     toast('设置音乐');
-    musicAPI.setMusic();
+    musicAPI.setMusic(ocr);
     sleep(5000);
 }
 
@@ -622,7 +628,7 @@ function addPostContentPixel4(video) {
     sleep(2000);
 
     //敲个空格
-    click(530, 2330);
+    click(530, 2070);
     console.log('敲个空格');
     toast('敲个空格');
     sleep(1000);
@@ -644,36 +650,36 @@ function addPostContentPixel4(video) {
         sleep(2000);
 
         //点击添加产品
-        click(900, 1350);
+        click(900, 1220);
         console.log('点击添加产品');
         sleep(2000);
 
         //点击弹出框添加产品
-        click(360, 1850);
+        click(360, 1500);
         console.log('点击弹出框添加产品');
         sleep(10000);
 
         //点击搜索产品
-        click(250, 350);
+        click(250, 300);
         console.log('点击搜索产品');
         sleep(2000);
 
         //输入产品名称
         setClip(pName)
         sleep(500)
-        press(220, 360, 2000) //长按拉出粘贴键
+        press(220, 300, 2000) //长按拉出粘贴键
         sleep(500)
-        click(160, 250)
+        click(160, 180)
         console.log('输入产品名称：' + pName);
         sleep(1000);
 
         //点击键盘搜索
-        click(950, 2300);
+        click(1000, 2070);
         console.log('点击搜索产品');
         sleep(10000);
 
         //选择第一个搜索结果（这一步有点问题，我忽然想到一个解决办法）
-        click(900, 800);
+        click(900, 700);
         console.log('选择第一个搜索结果');
         sleep(5000);
 
@@ -686,7 +692,7 @@ function addPostContentPixel4(video) {
         //最好是要删除文本框内文案，重新输入
 
         //选择弹出框的添加 （选个中间的点，这一步可有可无）
-        click(430, 770);
+        click(500, 700);
         console.log('选择弹出框的添加');
         sleep(5000);
     }
@@ -697,6 +703,6 @@ function addPostContentPixel4(video) {
     sleep(2000);
 
     //点击post
-    click(800, 2300);
+    click(800, 2150);
     console.log('点击post');
 }

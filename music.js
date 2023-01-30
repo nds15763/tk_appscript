@@ -68,7 +68,7 @@ function setMusicPixel4(ocr) {
     //通过OCR点击到收藏音乐库，返回偏移量
     let FY = clickToFavMusicPage(ocr)
     //如果是pixel4 标准是900
-    if (FY == 0 || Math.abs(FY - 900) > 100) {
+    if (FY == 0 || Math.abs(FY - 750) > 100) {
         //选择第一个音乐
         click(400, 1100);//1100
         console.log('选择第一个音乐');
@@ -89,7 +89,10 @@ function setMusicPixel4(ocr) {
         console.log('选择音乐');
         sleep(5000);
     }
-
+    //落下弹窗
+    click(500, 500);
+    console.log('落下弹窗');
+    sleep(1000);
     //点击next
     click(1000, 2150);
     console.log('点击next');
