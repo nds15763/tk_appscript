@@ -5,23 +5,19 @@ if (dM.search("Pixel 3") != -1) {
     pY = pY - 180
 }
 var musicAPI = require('music.js')
-var ocrAPI = require('ocr.js')
-var ocr
 // var httpAPI = require('http.js')
 // var FileAPI = require('file.js')
 
 main()
 
 function main() {
-    //初始化ocr
-    ocr = ocrAPI.Init()
     toast("群控脚本启动");
     //打开tk
     openTiktok()
     //获取视频配置列表
     var postList = GetPostList()
     //循环发视频
-    for (let index = 0; index < postList.length; index++) {
+    for (let index = 3; index < postList.length; index++) {
         //点击发布视频按钮
         clickVideoPost()
         let video = postList[index];
@@ -114,19 +110,19 @@ function GetPostList() {
             "music": "original sound - :)",
             "productList": ["Rosemary Oil For Hair 150ml"]
         },
-        {
-            "videoContent": 'If you have hair loss\
- You can use \n"Rosemary\
- Oil"\n to promote hair\
- growth and your hair will\
- become lush.\nstrong &\
- shiner in just two weeks\
- of use!!\n\
-    😱😱😱',
-            "postContent": "Tried this for the first time my hair feels amazing!!!#blackfriday#tiktokshop#tiktokshopfinds#tiktokmademebuyit #rosemaryoil #fyp",
-            "music": "original sound - :)",
-            "productList": ["Rosemary Oil For Hair 150ml"]
-        },
+//         {
+//             "videoContent": 'If you have hair loss\
+//  You can use \n"Rosemary\
+//  Oil"\n to promote hair\
+//  growth and your hair will\
+//  become lush.\nstrong &\
+//  shiner in just two weeks\
+//  of use!!\n\
+//     😱😱😱',
+//             "postContent": "Tried this for the first time my hair feels amazing!!!#blackfriday#tiktokshop#tiktokshopfinds#tiktokmademebuyit #rosemaryoil #fyp",
+//             "music": "original sound - :)",
+//             "productList": ["Rosemary Oil For Hair 150ml"]
+//         },
         {
             "videoContent": 'when you found the plouise has the new product\n\
  Wash Away 2022 Skincare Mystery Box\n\
@@ -261,10 +257,6 @@ function selectVideoPixel3(count) {
     toast('点击第' + count + '个视频,x:' + videoX + ',y:' + videoY);
     sleep(5000);
 
-    click(1050, 2650);
-    console.log('点击next');
-    toast('点击next');
-    sleep(5000);
 }
 
 
@@ -335,7 +327,7 @@ function addVideoContentPixel3(video) {
     sleep(2000);
 
     toast('设置音乐');
-    musicAPI.setMusic(ocr);
+    musicAPI.setMusic();
     sleep(5000);
 }
 
@@ -384,7 +376,7 @@ function addVideoContentOther(video) {
     sleep(2000);
 
     toast('设置音乐');
-    musicAPI.setMusic(ocr);
+    musicAPI.setMusic();
     sleep(5000);
 }
 
@@ -442,7 +434,7 @@ function addVideoContentPixel4(video) {
     sleep(2000);
 
     toast('设置音乐');
-    musicAPI.setMusic(ocr);
+    musicAPI.setMusic();
     sleep(5000);
 }
 

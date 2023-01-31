@@ -1,8 +1,13 @@
 var musicAPI = {};
+var MLKitOCR = $plugins.load('org.autojs.autojspro.plugin.mlkit.ocr');
 var isAccess = false;
-
 //设置音乐
-musicAPI.setMusic = function (ocr) {
+musicAPI.setMusic = function () {
+    //MLKitOCR
+    var ocr = new MLKitOCR();
+    if (!isAccess){
+        isAccess = requestScreenCapture();
+    }
     //校准位置
     console.log("setMusic")
     //判断机型
