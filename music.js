@@ -7,6 +7,7 @@ musicAPI.setMusic = function () {
     var ocr = new MLKitOCR();
     if (!isAccess){
         isAccess = requestScreenCapture();
+        sleep(2000);
     }
     //校准位置
     console.log("setMusic")

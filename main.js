@@ -17,7 +17,7 @@ function main() {
     //获取视频配置列表
     var postList = GetPostList()
     //循环发视频
-    for (let index = 3; index < postList.length; index++) {
+    for (let index = 0; index < postList.length; index++) {
         //点击发布视频按钮
         clickVideoPost()
         let video = postList[index];
@@ -637,7 +637,7 @@ function addPostContentPixel4(video) {
     for (let pIndex = pList.length; pIndex > 0; pIndex--) {
         let pName = pList[pIndex - 1];
         //点击收回键盘
-        click(900, 1350);
+        click(850, 750);
         console.log('点击收回键盘');
         sleep(2000);
 
@@ -690,7 +690,7 @@ function addPostContentPixel4(video) {
     }
 
     //点击收回键盘
-    click(900, 1350);
+    click(850, 750);
     console.log('点击收回键盘');
     sleep(2000);
 
