@@ -4,8 +4,8 @@ var pY = device.height //vivo 2400,pixel4 2280
 if (dM.search("Pixel 3") != -1) {
     pY = pY - 180
 }
-var musicAPI = require('music.js')
-// var httpAPI = require('http.js')
+var musicAPI = require('music.js');
+var httpAPI = require('http.js');
 // var FileAPI = require('file.js')
 
 main()
@@ -14,30 +14,107 @@ function main() {
     toast("群控脚本启动");
     //打开tk
     openTiktok()
+
     //获取视频配置列表
+
+    //判断视频形式
+    selectVideoType(0)
+
+}
+
+function selectVideoType(type){
+    if (type == 0){
+        normalFlow(type)
+    }else if (type == 1){
+        greanScreenFlow(type)
+    }
+}
+
+
+//判断视频形式，0:老形式  1:抠图形式
+function normalFlow(vType) {
+
     var postList = GetPostList()
+    
     //循环发视频
     for (let index = 0; index < postList.length; index++) {
-        //点击发布视频按钮
-        clickVideoPost()
-        let video = postList[index];
-        //选择一个视频
-        selectVideo(index);
 
-        //添加视频内容
-        addVideoContent(video);
-
-        //添加视频内容
-        addPostContent(video);
-
-        //发视频结束随机间隔
-        if (index < postList.length - 1) {
-            //等待1分钟
+        //等待视频生成一分钟，如果不是第一次执行，则再随机等待1~3分钟
+        toastLog("等待视频发布，1分钟");
+        //sleep(60000)
+        if (index != 0) {
             //加个随机数
             let ran = Math.floor(Math.random() * 120000);
-            toast('点击发送，等待2分钟加' + ran + '秒钟视频上传完成');
-            sleep(120000 + ran);
+            toast('点击发送，等待' + ((60000 + ran) / 60000) + '分钟');
+            sleep(60000 + ran);
         }
+
+        //点击发布视频按钮
+        clickVideoPost()
+        //let video = creativeList[index];
+        //选择一个视频 //这里也需要改，得看模式了,如果模式1的话得新拍一个视频
+        selectVideo(index,vType);
+
+        content = postList[index]
+        //添加视频内容
+        addvideo_content(content);
+
+        //添加视频内容
+        addpost_content(content);
+    }
+
+    // 气泡提示执行结束
+    toast("执行结束");
+}
+
+//判断视频形式，0:老形式  1:抠图形式
+function greanScreenFlow(vType) {
+
+    //获取本次需要发送的产品ID列
+    //var postList = httpAPI.getproduct_list()
+    var creativeList = [ 3, 4, 5]
+    
+    //循环发视频
+    for (let index = 0; index < creativeList.length; index++) {
+        //根据产品ID获取需要投放的创意
+        // creativeID = httpAPI.getCreativeIDByProduct(postList[index])
+
+        //根据创意ID获取发布文案
+        content = httpAPI.getContentByCreativeID(creativeList[index])
+
+        //根据创意ID生成视频
+        taskID = httpAPI.getTaskByCreativeID(creativeList[index])
+        if (taskID == "500") {
+            continue;
+        }
+
+        //等待视频生成一分钟，如果不是第一次执行，则再随机等待1~3分钟
+        toastLog("等待视频制作，1分钟");
+        //sleep(60000)
+        if (index != 0) {
+            //加个随机数
+            let ran = Math.floor(Math.random() * 120000);
+            toast('点击发送，等待' + ((60000 + ran) / 60000) + '分钟');
+            sleep(60000 + ran);
+        }
+
+        //判断模式，是需要拍摄视频还是请求视频
+        //这个之后再做  
+
+        //根据创意ID生成视频
+        httpAPI.getVideoByTaskID(taskID, 0)
+
+        //点击发布视频按钮
+        clickVideoPost()
+        //let video = creativeList[index];
+        //选择一个视频 //这里也需要改，得看模式了,如果模式1的话得新拍一个视频
+        selectVideo(index,vType);
+
+        //添加视频内容
+        addvideo_content(content);
+
+        //添加视频内容
+        addpost_content(content);
     }
 
     // 气泡提示执行结束
@@ -55,29 +132,30 @@ function openTiktok() {
     toast('启动完成');
 }
 
-function selectVideo(count) {
+function selectVideo(count,vtype) {
+
     if (dM.search("Pixel 3") != -1) {
         //添加视频内容
         selectVideoPixel3(count);
     } else if (dM.search("Pixel 4") != -1) {
         //添加视频内容
-        selectVideoPixel4(count);
+        selectVideoPixel4(count,vtype);
     } else {
         //添加视频内容
         selectVideoOther(count);
     }
 }
 
-function addVideoContent(video) {
+function addvideo_content(video) {
     if (dM.search("Pixel 3") != -1) {
         //添加视频内容
-        addVideoContentPixel3(video);
+        addvideo_contentPixel3(video);
     } else if (dM.search("Pixel 4") != -1) {
         //添加视频内容
-        addVideoContentPixel4(video);
+        addvideo_contentPixel4(video);
     } else {
         //添加视频内容
-        addVideoContentOther(video);
+        addvideo_contentOther(video);
     }
 }
 
@@ -86,87 +164,77 @@ function GetPostList() {
     //获取文案列表
     return [
         {
-            "videoContent": "I think my fave affordable loose powder\n\
- which like blurs your under eyes makes\
- them look flawless makes you not crease\n\
- now comes in a pink shade this is the\
- best affordasble loose power lown.",
-            "postContent": "A NEW affordable Pink Setting Powder, what do we think? #testingnewmakeup #pinksettingpowder #flawlessundereye",
+            "video_content": "Love Charlotte Tilbury\n\
+Airbrush Flawless\n\
+Setting Spary but ONLY\n\
+want to pay a fraction of\n\
+the price?I found\n\
+something that is as\n\
+good as the CT one.",
+            "post_content": "It’s been out of stock for sooooo long!Girls,Glow Milk set & Seal Mist is finally back.Don’t miss it again#glowmilkmist #charlottetilbury #ouicherriemist #uk #ukgirly #beautytok #skincare #makeup #uksaving #saving #tiktokmademebuyit #tiktoktrending #tiktokviral",
             "music": "original sound - :)",
-            "productList": ["vitamin babe mist"]
+            "product_list": ["Glow Milk Set & Seal Mist","Oui Cherie Mist"]
         },
         {
-            "videoContent": "Every girl needs this for \nhair loss 💀",
-            "postContent": "Tried this for the first time my hair feels amazing!!!#blackfriday#tiktokshop#tiktokshopfinds#tiktokmademebuyit #rosemaryoil #fyp",
+            "video_content": "Every girl needs this for \nhair loss 💀",
+            "post_content": "Tried this for the first time my hair feels amazing!!!#blackfriday#tiktokshop#tiktokshopfinds#tiktokmademebuyit #rosemaryoil #fyp",
             "music": "original sound - :)",
-            "productList": ["Rosemary Oil For Hair 150ml"]
+            "product_list": ["Rosemary Oil For Hair 150ml"]
         },
         {
-            "videoContent": 'Are you struggling with hair\
- loss? 🤔\n\
- Free shipping !🤨\n\
- Rosemary Oil For Hair only£6🤩',
-            "postContent": "our hair loves this stuff #naturalhair #curlyhair #MomsofTikTok #hairoil ",
+            "video_content": "Love this jumpsuit so\n\
+much!!\n\
+Such nice material\n\
+so flattering and\n\
+such stretchy fits in\n\
+all the right places!!\n\
+And it's ONLY £9.99!!!",
+            "post_content": "Grab yours before it’s gone again!!#foryou #jumpsuit #leggings #clothes #mooslover #clothing #christmas #tiktokmademebuyit #tiktokshop #tiktokshopfinds",
             "music": "original sound - :)",
-            "productList": ["Rosemary Oil For Hair 150ml"]
-        },
-//         {
-//             "videoContent": 'If you have hair loss\
-//  You can use \n"Rosemary\
-//  Oil"\n to promote hair\
-//  growth and your hair will\
-//  become lush.\nstrong &\
-//  shiner in just two weeks\
-//  of use!!\n\
-//     😱😱😱',
-//             "postContent": "Tried this for the first time my hair feels amazing!!!#blackfriday#tiktokshop#tiktokshopfinds#tiktokmademebuyit #rosemaryoil #fyp",
-//             "music": "original sound - :)",
-//             "productList": ["Rosemary Oil For Hair 150ml"]
-//         },
-        {
-            "videoContent": 'when you found the plouise has the new product\n\
- Wash Away 2022 Skincare Mystery Box\n\
- Welcome to 2023🤩',
-            "postContent": "This sold out so fast!!! RUN RUN RUN🏃‍♀️#plouisemakeup #tiktokshop#tiktokshopfinds #plouisemakeupacademy #plouise_makeup_academy#plouisebase#plouisemysterybox#plouiseluckydip#newproducts#newsrock#tiktokshopping",
-            "music": "original sound - :)",
-            "productList": ["P.Louise Wash Away 2022 Skincare Mystery Box", "P.Louise Makeup Mystery Box"]
+            "product_list": ["[Curlady] Shaping Low Back Bodysuit","【Ship From UK】Super Soft Jumpsuit 3 Neck Versions"]
         },
         {
-            "videoContent": 'Everything inside The £25\n\
- P.Louise Wash Away 2022\n\
- Skincare Mystery Box',
-            "postContent": "This sold out so fast!!! RUN RUN RUN🏃‍♀️#plouisemakeup #tiktokshop#tiktokshopfinds #plouisemakeupacademy #plouise_makeup_academy#plouisebase#plouisemysterybox#plouiseluckydip#newproducts#newsrock#tiktokshopping",
+            "video_content": " 'nobody cares that made by\n\
+mitchell has released a\n\
+brand new valentine's\n\
+mystery box'\n\
+you'reguaranteedtogetan\n\
+item of luggage/storage\n\
+with this box\n\
+🎁😍🙌🏽 ",
+            "post_content": "guys this mystery box looks UNREAL!! you are guaranteed to get an item of luggage/storage 🙌🏽 #fyp #makeup #trending #viral",
             "music": "original sound - :)",
-            "productList": ["P.Louise Wash Away 2022 Skincare Mystery Box", "P.Louise Makeup Mystery Box"]
+            "product_list": ["Made By Mitchell Mystery Make Up Bag"]
         },
         {
-            "videoContent": 'When you find "P.Louise\n\
- New products-2023 Mystery Box\n\
- worth than £600😍😍\n\
- Now is £25 It\'s a great deal for money!!!',
-            "postContent": "This sold out so fast!!! RUN RUN RUN🏃‍♀️#plouisemakeup #tiktokshop#tiktokshopfinds #plouisemakeupacademy #plouise_makeup_academy#plouisebase#plouisemysterybox#plouiseluckydip#newproducts#newsrock#tiktokshopping",
+            "video_content": "In just 15 minutes a day\n\
+quickly burn body fat\n\
+and help achieve an\n\
+ideal figure These parts\n\
+are easy to disassemble\n\
+and easy to\n\
+store It's reduced from\n\
+£59.99 to £25\n\
+Omg!!! Shocked\n\
+😱😱😰🏃‍♀️🏃‍♂️👇👇",
+            "post_content": "I’ll start using it evening!!😄#fyp #tiktokshop #tiktokshopfinds #weightedhulahoop#weightloss",
             "music": "original sound - :)",
-            "productList": ["P.Louise Wash Away 2022 Skincare Mystery Box", "P.Louise Makeup Mystery Box"]
+            "product_list": ["K-MART (UK Seller) Smart Weighted Hula Hoop","K-Mart Smart Weighted Hula Hoop Pro with Counter"]
         },
         {
-            "videoContent": 'Come for a sunbed with\n\
- me using 2btanned😘\n\
- last chance to grab it half\n\
- price !!!😍\n\
- linked below',
-            "postContent": "quick before the sale ends 🏃‍♀️🏃‍♀️🏃‍♀️ #fyp #viral #tiktokshop #2btanned #2btannedintesifyinggel #foryoupage",
+            "video_content": 'Congrats! I’ve been adding rosemary oil to my shampoo. I only wash my hair every other day. I’ve got a patch that has a bunch of new hairs sprouting that’s been bald for years! Really hoping to start seeing results on my hairline soon since it’s worse there',
+            "post_content": "#rosemaryoil #hairloss #diluted #fyp #haircareroutine #tiktokshop #GoforLoveGiftforYou",
             "music": "original sound - :)",
-            "productList": ["2BTanned Intensifying Gel", "2bTanned Extreme Intensifying Tanning Cream"]
+            "product_list": ["rosemary oil"]
         },
         {
-            "videoContent": 'when you paid full\n\
- price for 2btanned\n\
- products but now they\n\
- are HALF PRICE on\n\
- tiktok shop😭',
-            "postContent": "this is deffo gonna break my bank #fyp #foryou #tanning #tanningbed #tan #sunbeds #2btanned #tanned #sunbed",
+            "video_content": "Made by matchell mystery bag \n\
+￡25 for six prouducts 😍\n\
+worth than ￡70！\n\
+Go for Love Gift for You💞",
+            "post_content": "I brought the £25 mystery bag from @madebymitchell #madebymitchell #makeup#GoforLoveGiftforYou",
             "music": "original sound - :)",
-            "productList": ["2BTanned Intensifying Gel", "2bTanned Extreme Intensifying Tanning Cream"]
+            "product_list": ["Made By Mitchell Mystery Make Up Bag"]
         },
     ]
 }
@@ -186,13 +254,13 @@ function clickVideoPost() {
     sleep(5000);
 }
 //添加发布页内容
-function addPostContent(video) {
+function addpost_content(video) {
     if (dM.search("Pixel 3") != -1) {
-        addPostContentPixel3(video)
+        addpost_contentPixel3(video)
     } else if (dM.search("Pixel 4") != -1) {
-        addPostContentPixel4(video)
+        addpost_contentPixel4(video)
     } else {
-        addPostContentOther(video)
+        addpost_contentOther(video)
     }
 }
 
@@ -260,7 +328,7 @@ function selectVideoPixel3(count) {
 }
 
 
-function selectVideoPixel4(count) {
+function selectVideoPixel4(count,vtype) {
     //打开相册
     click(Math.ceil(0.833 * device.width), Math.ceil(0.8125 * pY));
     console.log('点击相册');
@@ -281,11 +349,16 @@ function selectVideoPixel4(count) {
 
     //每个类型的手机都不一样 
 
-    let pXY = setXY(count)
-    let videoX = pXY[0]
-    let videoY = pXY[1]
-    //相册选择视频tab
-    click(videoX, videoY)
+    if (vtype == 0) {
+        let pXY = setXY(count)
+        let videoX = pXY[0]
+        let videoY = pXY[1]
+        //相册选择视频tab
+        click(videoX, videoY)
+    }else if (vtype == 1){
+        click(50, 450)
+    }
+   
     console.log('点击第' + count + '个视频,x:' + videoX + ',y:' + videoY);
     toast('点击第' + count + '个视频,x:' + videoX + ',y:' + videoY);
     sleep(5000);
@@ -299,10 +372,16 @@ function setXY(count) {
         videoX = 100 + (count % 3) * 500
         videoY = 600 + (count / 3) * 800
     }
+
+    if (dM.search("Pixel 4") != -1) {
+        videoX = 80 + (count % 3) * 400
+        videoY = 450 + (count / 3) * 400
+    
+    }
     return new Array(videoX, videoY)
 }
 
-function addVideoContentPixel3(video) {
+function addvideo_contentPixel3(video) {
     //点击文案按键
     click(Math.ceil(0.92 * device.width), Math.ceil(0.236 * device.height));
     console.log('点击文案按键');
@@ -310,8 +389,8 @@ function addVideoContentPixel3(video) {
     sleep(2000);
 
     //选择内容输入到屏幕内
-    input(video["videoContent"]);
-    console.log('视频文案:' + video["videoContent"]);
+    input(video["video_content"]);
+    console.log('视频文案:' + video["video_content"]);
     toast('视频文案');
     sleep(2000);
 
@@ -333,7 +412,7 @@ function addVideoContentPixel3(video) {
 
 
 //添加视频内容
-function addVideoContentOther(video) {
+function addvideo_contentOther(video) {
 
     //点击文案按键
     click(960, 420);
@@ -342,8 +421,8 @@ function addVideoContentOther(video) {
     sleep(2000);
 
     //选择内容输入到屏幕内
-    input(video["videoContent"]);
-    console.log('视频文案:' + video["videoContent"]);
+    input(video["video_content"]);
+    console.log('视频文案:' + video["video_content"]);
     toast('视频文案');
     sleep(2000);
 
@@ -381,7 +460,7 @@ function addVideoContentOther(video) {
 }
 
 //添加视频内容
-function addVideoContentPixel4(video) {
+function addvideo_contentPixel4(video) {
 
     //点击文案按键
     click(1000, 550);
@@ -390,8 +469,8 @@ function addVideoContentPixel4(video) {
     sleep(2000);
 
     //选择内容输入到屏幕内
-    input(video["videoContent"]);
-    console.log('视频文案:' + video["videoContent"]);
+    input(video["video_content"]);
+    console.log('视频文案:' + video["video_content"]);
     toast('视频文案');
     sleep(2000);
 
@@ -401,15 +480,15 @@ function addVideoContentPixel4(video) {
     toast('点击添加边框');
     sleep(1000);
 
-    click(65, 1150);
-    console.log('点击添加边框');
-    toast('点击添加边框');
-    sleep(1000);
+    // click(65, 1150);
+    // console.log('点击添加边框');
+    // toast('点击添加边框');
+    // sleep(1000);
 
-    click(65, 1150);
-    console.log('点击添加边框');
-    toast('点击添加边框');
-    sleep(1000);
+    // click(65, 1150);
+    // console.log('点击添加边框');
+    // toast('点击添加边框');
+    // sleep(1000);
 
     click(1030, 1300);
     console.log('点击添加背景');
@@ -439,7 +518,7 @@ function addVideoContentPixel4(video) {
 }
 
 //添加发布页内容
-function addPostContentOther(video) {
+function addpost_contentOther(video) {
     //点一下
     click(180, 390);
     toast('点下空白');
@@ -453,13 +532,13 @@ function addPostContentOther(video) {
     sleep(1000);
 
     //输入视频文案
-    input(video["postContent"] + " ");
+    input(video["post_content"] + " ");
     console.log('输入视频文案');
     sleep(2000);
 
 
 
-    var pList = video["productList"]
+    var pList = video["product_list"]
     //循环输入产品 安卓倒序添加
     for (let pIndex = pList.length; pIndex > 0; pIndex--) {
         let pName = pList[pIndex - 1];
@@ -527,7 +606,7 @@ function addPostContentOther(video) {
 }
 
 //添加发布页内容
-function addPostContentPixel3(video) {
+function addpost_contentPixel3(video) {
     //点一下
     click(200, 450);
     toast('点下空白');
@@ -541,11 +620,11 @@ function addPostContentPixel3(video) {
     sleep(2000);
 
     //输入视频文案
-    input(video["postContent"] + " ");
+    input(video["post_content"] + " ");
     console.log('输入视频文案');
     sleep(2000);
 
-    var pList = video["productList"]
+    var pList = video["product_list"]
     //循环输入产品 安卓倒序添加
     for (let pIndex = pList.length; pIndex > 0; pIndex--) {
         let pName = pList[pIndex - 1];
@@ -612,7 +691,7 @@ function addPostContentPixel3(video) {
 }
 
 //添加发布页内容
-function addPostContentPixel4(video) {
+function addpost_contentPixel4(video) {
     //点一下
     click(180, 390);
     toast('点下空白');
@@ -626,13 +705,13 @@ function addPostContentPixel4(video) {
     sleep(1000);
 
     //输入视频文案
-    input(video["postContent"] + " ");
+    input(video["post_content"] + " ");
     console.log('输入视频文案');
     sleep(2000);
 
 
 
-    var pList = video["productList"]
+    var pList = video["product_list"]
     //循环输入产品 安卓倒序添加
     for (let pIndex = pList.length; pIndex > 0; pIndex--) {
         let pName = pList[pIndex - 1];
@@ -676,7 +755,7 @@ function addPostContentPixel4(video) {
         sleep(5000);
 
         //选择弹出框的添加 （选个中间的点，这一步可有可无）
-        click(600, 1260);
+        click(600, 1160);
         console.log('选择弹出框的添加');
         sleep(5000); //这一步有个验证
 
@@ -698,3 +777,4 @@ function addPostContentPixel4(video) {
     click(800, 2150);
     console.log('点击post');
 }
+
