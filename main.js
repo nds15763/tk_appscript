@@ -11,6 +11,8 @@ var httpAPI = require('http.js');
 main()
 
 function main() {
+    //
+    checkAccessibilityService()
     toast("群控脚本启动");
     //打开tk
     openTiktok()
@@ -22,10 +24,13 @@ function main() {
 
 }
 
-function selectVideoType(type){
-    if (type == 0){
+function checkAccessibilityService(){
+}
+
+function selectVideoType(type) {
+    if (type == 0) {
         normalFlow(type)
-    }else if (type == 1){
+    } else if (type == 1) {
         greanScreenFlow(type)
     }
 }
@@ -35,9 +40,9 @@ function selectVideoType(type){
 function normalFlow(vType) {
 
     var postList = GetPostList()
-    
+
     //循环发视频
-    for (let index = 0; index < postList.length; index++) {
+    for (let index = 4; index < postList.length; index++) {
 
         //等待视频生成一分钟，如果不是第一次执行，则再随机等待1~3分钟
         toastLog("等待视频发布，1分钟");
@@ -53,7 +58,7 @@ function normalFlow(vType) {
         clickVideoPost()
         //let video = creativeList[index];
         //选择一个视频 //这里也需要改，得看模式了,如果模式1的话得新拍一个视频
-        selectVideo(index,vType);
+        selectVideo(index, vType);
 
         content = postList[index]
         //添加视频内容
@@ -72,8 +77,8 @@ function greanScreenFlow(vType) {
 
     //获取本次需要发送的产品ID列
     //var postList = httpAPI.getproduct_list()
-    var creativeList = [ 3, 4, 5]
-    
+    var creativeList = [3, 4, 5]
+
     //循环发视频
     for (let index = 0; index < creativeList.length; index++) {
         //根据产品ID获取需要投放的创意
@@ -108,7 +113,7 @@ function greanScreenFlow(vType) {
         clickVideoPost()
         //let video = creativeList[index];
         //选择一个视频 //这里也需要改，得看模式了,如果模式1的话得新拍一个视频
-        selectVideo(index,vType);
+        selectVideo(index, vType);
 
         //添加视频内容
         addvideo_content(content);
@@ -132,14 +137,14 @@ function openTiktok() {
     toast('启动完成');
 }
 
-function selectVideo(count,vtype) {
+function selectVideo(count, vtype) {
 
     if (dM.search("Pixel 3") != -1) {
         //添加视频内容
         selectVideoPixel3(count);
     } else if (dM.search("Pixel 4") != -1) {
         //添加视频内容
-        selectVideoPixel4(count,vtype);
+        selectVideoPixel4(count, vtype);
     } else {
         //添加视频内容
         selectVideoOther(count);
@@ -163,18 +168,19 @@ function addvideo_content(video) {
 function GetPostList() {
     //获取文案列表
     return [
-        {
-            "video_content": "Love Charlotte Tilbury\n\
-Airbrush Flawless\n\
-Setting Spary but ONLY\n\
-want to pay a fraction of\n\
-the price?I found\n\
-something that is as\n\
-good as the CT one.",
-            "post_content": "It’s been out of stock for sooooo long!Girls,Glow Milk set & Seal Mist is finally back.Don’t miss it again#glowmilkmist #charlottetilbury #ouicherriemist #uk #ukgirly #beautytok #skincare #makeup #uksaving #saving #tiktokmademebuyit #tiktoktrending #tiktokviral",
-            "music": "original sound - :)",
-            "product_list": ["Glow Milk Set & Seal Mist","Oui Cherie Mist"]
-        },
+        //昨天的
+        //         {
+        //             "video_content": "Love Charlotte Tilbury\n\
+        // Airbrush Flawless\n\
+        // Setting Spary but ONLY\n\
+        // want to pay a fraction of\n\
+        // the price?I found\n\
+        // something that is as\n\
+        // good as the CT one.",
+        //             "post_content": "It’s been out of stock for sooooo long!Girls,Glow Milk set & Seal Mist is finally back.Don’t miss it again#glowmilkmist #charlottetilbury #ouicherriemist #uk #ukgirly #beautytok #skincare #makeup #uksaving #saving #tiktokmademebuyit #tiktoktrending #tiktokviral",
+        //             "music": "original sound - :)",
+        //             "product_list": ["Glow Milk Set & Seal Mist","Oui Cherie Mist"]
+        //         },
         {
             "video_content": "Every girl needs this for \nhair loss 💀",
             "post_content": "Tried this for the first time my hair feels amazing!!!#blackfriday#tiktokshop#tiktokshopfinds#tiktokmademebuyit #rosemaryoil #fyp",
@@ -191,10 +197,10 @@ all the right places!!\n\
 And it's ONLY £9.99!!!",
             "post_content": "Grab yours before it’s gone again!!#foryou #jumpsuit #leggings #clothes #mooslover #clothing #christmas #tiktokmademebuyit #tiktokshop #tiktokshopfinds",
             "music": "original sound - :)",
-            "product_list": ["[Curlady] Shaping Low Back Bodysuit","【Ship From UK】Super Soft Jumpsuit 3 Neck Versions"]
+            "product_list": ["[Curlady] Shaping Low Back Bodysuit", "【Ship From UK】Super Soft Jumpsuit 3 Neck Versions"]
         },
         {
-            "video_content": " 'nobody cares that made by\n\
+            "video_content": " 'nobody cares 1that made by\n\
 mitchell has released a\n\
 brand new valentine's\n\
 mystery box'\n\
@@ -219,7 +225,7 @@ Omg!!! Shocked\n\
 😱😱😰🏃‍♀️🏃‍♂️👇👇",
             "post_content": "I’ll start using it evening!!😄#fyp #tiktokshop #tiktokshopfinds #weightedhulahoop#weightloss",
             "music": "original sound - :)",
-            "product_list": ["K-MART (UK Seller) Smart Weighted Hula Hoop","K-Mart Smart Weighted Hula Hoop Pro with Counter"]
+            "product_list": ["K-MART (UK Seller) Smart Weighted Hula Hoop", "K-Mart Smart Weighted Hula Hoop Pro with Counter"]
         },
         {
             "video_content": 'Congrats! I’ve been adding rosemary oil to my shampoo. I only wash my hair every other day. I’ve got a patch that has a bunch of new hairs sprouting that’s been bald for years! Really hoping to start seeing results on my hairline soon since it’s worse there',
@@ -235,6 +241,50 @@ Go for Love Gift for You💞",
             "post_content": "I brought the £25 mystery bag from @madebymitchell #madebymitchell #makeup#GoforLoveGiftforYou",
             "music": "original sound - :)",
             "product_list": ["Made By Mitchell Mystery Make Up Bag"]
+        },
+        {
+            "video_content": "How amazing the viral pink honey Superhold Glue !!\n\
+Only £8.99 🤨😮😍",
+            "post_content": "Pink Honey🍯❤ #makeup #fyp #pinkhoneyeyebrows",
+            "music": "original sound - :)",
+            "product_list": ["Original Superhold Honey Glue 28ml"]
+        },
+        //今天的
+        {
+            "video_content": "I love the Rosemary Oil For Hair ! It leaves my hair so soft and smooth, and the oil has a wonderful aroma that makes my hair smell fresh and clean. It has also helped to promote hair growth so my hair is thick and healthy. The oil isn't greasy and it doesn't leave a residue. I love how it makes my hair look more shiny and lustrous. ",
+            "post_content": "Rosemary Oil makes my hair soft, smooth, and full of life",
+            "music": "original sound - :)",
+            "product_list": ["rosemary oil"]
+        },
+        {
+            "video_content": "This mist hydrates my skin, refreshes my makeup, and gives me a glowing, long-lasting freshness. It helps me achieve the ultimate dewy glow.",
+            "post_content": "I absolutely love this ultra-fine dual-phase mist skin! It gives my skin an instant boost of hydration, locking in and refreshing my makeup look. The lightweight formula feels like a soft kiss on my skin, leaving my complexion with a glowing, long-lasting freshness throughout the day. It's enriched with antioxidant hero ingredient Cherry Extract & Vitamin C, as well as soothing Chamomile, which helps to hydrate my skin and minimize my pores. This mist is perfect for all skin types and anyone who wants to achieve the ultimate dewy glow.",
+            "music": "original sound - :)",
+            "product_list": ["Oui Cherie Mist"]
+        },
+        {
+            "video_content": "I'm satisfied with Original Superhold Honey Glue 28ml -Pink Honey Original as it can provide me with all day/night hold and it's vegan and cruelty-free with complete accessories.Only £8.99 Run！😍",
+            "post_content": "I have been looking for a product to help boost my brows, when I found Original Superhold Honey Glue 28ml -Pink Honey Original, I knew it would give me all day/night hold for the perfect fluffy or laminated look. It is water activated and formulated to create and add texture and fullness to my brows. And it's vegan and cruelty-free, I'm really happy with what I received, there's a Pink Honey Jar 28ml, a Bamboo Spoolie and an Instructions, so complete!",
+            "music": "original sound - :)",
+            "product_list": ["Original Superhold Honey Glue 28ml"]
+        },
+        {
+            "video_content": "I'm so perfect for [Curlady] Shaping Low Back Bodysuit, its adjustable straps and contour cups design make my low back and backless outfit more chic, and it can also effectively flatten my tummy and make me look more attractive and sexy. And its fabric is also very comfortable, it helps keep my body temperature at its best, it's really great!",
+            "post_content": "it makes my low back and backless outfit more chic, and effectively flatten my tummy, the fabric is also very comfortable, it's really great!",
+            "music": "original sound - :)",
+            "product_list": ["[Curlady] Shaping Low Back Bodysuit"]
+        },
+        // {
+        //     "video_content": "Set and seal makeup with a weightless, alcohol-free formula for hydrated, glowing skin.",
+        //     "post_content": "The Beauty Crop X Amelia Olivia Glow Milk Set & Seal Mist sets and seals makeup with its weightless, alcohol-free formula. Hydrating with Hyaluronic Acid, Panthenol, Glycerin and Rose Water, it's suitable for oily and acne-prone skin. Goodbye melting, creasing and cakey makeup, hello glow, seal and set!😍",
+        //     "music": "original sound - :)",
+        //     "product_list": ["Glow Milk Set & Seal Mist"]
+        // },
+        {
+            "video_content": "Velvet Powder Puff gives me a perfect look, with its microfibre surface and sponge insert giving me an impeccable makeup experience!",
+            "post_content": "I've found my long-awaited dream makeup tool - Velvet Powder Puff! Its microfibre surface and sponge insert give me a flawless makeup experience. It not only minimizes pores and reduces shine, but also gives me a perfect look! I especially like its set of two design, and it only costs £13.99! Velvet Powder Puff is definitely a must-have makeup tool for me every day!",
+            "music": "original sound - :)",
+            "product_list": ["Velvet Powder Puff"]
         },
     ]
 }
@@ -293,6 +343,14 @@ function selectVideoOther(count) {
     console.log('点击第' + count + '个视频,x:' + videoX + ',y:' + videoY);
     toast('点击第' + count + '个视频,x:' + videoX + ',y:' + videoY);
     sleep(5000);
+
+
+    //点击next 
+    toast('点击next');
+    click(871, 2288);
+    sleep(3000);
+
+
 }
 
 function selectVideoPixel3(count) {
@@ -328,7 +386,7 @@ function selectVideoPixel3(count) {
 }
 
 
-function selectVideoPixel4(count,vtype) {
+function selectVideoPixel4(count, vtype) {
     //打开相册
     click(Math.ceil(0.833 * device.width), Math.ceil(0.8125 * pY));
     console.log('点击相册');
@@ -348,20 +406,25 @@ function selectVideoPixel4(count,vtype) {
     //根据个数选择视频 (最好是9个之内),i从0开始
 
     //每个类型的手机都不一样 
-
+    let pXY = setXY(count)
+    let videoX = pXY[0]
+    let videoY = pXY[1]
     if (vtype == 0) {
-        let pXY = setXY(count)
-        let videoX = pXY[0]
-        let videoY = pXY[1]
         //相册选择视频tab
         click(videoX, videoY)
-    }else if (vtype == 1){
+    } else if (vtype == 1) {
         click(50, 450)
     }
-   
+
     console.log('点击第' + count + '个视频,x:' + videoX + ',y:' + videoY);
     toast('点击第' + count + '个视频,x:' + videoX + ',y:' + videoY);
     sleep(5000);
+    re = musicAPI.checkText("Select")
+    if (re != 0) {
+        toast('点击next');
+        click(880, re);
+        sleep(2000);
+    }
 }
 
 function setXY(count) {
@@ -376,7 +439,7 @@ function setXY(count) {
     if (dM.search("Pixel 4") != -1) {
         videoX = 80 + (count % 3) * 400
         videoY = 450 + (count / 3) * 400
-    
+
     }
     return new Array(videoX, videoY)
 }
@@ -415,7 +478,7 @@ function addvideo_contentPixel3(video) {
 function addvideo_contentOther(video) {
 
     //点击文案按键
-    click(960, 420);
+    click(310, 2300);
     console.log('点击文案按键');
     toast('点击文案按键');
     sleep(2000);
@@ -462,11 +525,12 @@ function addvideo_contentOther(video) {
 //添加视频内容
 function addvideo_contentPixel4(video) {
 
+    musicAPI.clickText("Text")
     //点击文案按键
-    click(1000, 550);
-    console.log('点击文案按键');
-    toast('点击文案按键');
-    sleep(2000);
+    // click(1000, 550);
+    // console.log('点击文案按键');
+    // toast('点击文案按键');
+    // sleep(2000);
 
     //选择内容输入到屏幕内
     input(video["video_content"]);

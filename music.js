@@ -61,10 +61,16 @@ function setMusicPixel3(ocr) {
 }
 
 function setMusicPixel4(ocr) {
-    //点击添加音乐
-    click(560, 222);
-    console.log('点击添加音乐');
-    sleep(5000);
+    re = findText(ocr,"Sounds")
+    if (re){
+        musicAPI.clickText("Sounds")
+    }else{
+        //点击添加音乐
+        click(560, 222);
+        console.log('点击添加音乐');
+        sleep(5000);
+    }
+
 
     //点击添加音乐
     click(1025, 1215);
@@ -106,7 +112,7 @@ function setMusicPixel4(ocr) {
 }
 function setMusicOther(ocr) {
     //点击添加音乐
-    click(500, 250);
+    click(120, 2300);
     console.log('点击添加音乐');
     sleep(5000);
 
@@ -190,6 +196,76 @@ function findText(ocr, text) {
     let autojs = filtered.find(item => item.text.includes(text));
     console.log(autojs);
     return autojs
+}
+
+//设置音乐
+musicAPI.clickText = function (text) {
+     //MLKitOCR
+     var ocr = new MLKitOCR();
+     if (!isAccess){
+         isAccess = requestScreenCapture();
+         sleep(2000);
+     }
+    let autojs = {}
+    for (let i = 0; i < 5; i++) {
+        autojs = findText(ocr, text)
+        if (autojs) {
+            break;
+        }
+        toast('第' + i + '次监测，失败');
+    }
+
+    if (autojs) {
+        console.log(`confidence = ${autojs.confidence}, bounds = ${autojs.bounds}, center = (${autojs.bounds.centerX()}, ${autojs.bounds.centerY()})`);
+        autojs.clickCenter();
+    } else {
+
+        toast('没有检测到该文字');
+        sleep(1000);
+        toast('没有检测到该文字');
+        sleep(1000);
+    }
+    sleep(3000);
+
+    ocr.release();
+
+    return 
+}
+
+//设置音乐
+musicAPI.checkText = function (text) {
+    //MLKitOCR
+    var ocr = new MLKitOCR();
+    if (!isAccess){
+        isAccess = requestScreenCapture();
+        sleep(2000);
+    }
+   let autojs = {}
+   for (let i = 0; i < 5; i++) {
+       autojs = findText(ocr, text)
+       if (autojs) {
+           break;
+       }
+       toast('第' + i + '次监测，失败');
+   }
+
+   let FY = 0
+   if (autojs) {
+       console.log(`confidence = ${autojs.confidence}, bounds = ${autojs.bounds}, center = (${autojs.bounds.centerX()}, ${autojs.bounds.centerY()})`);
+       FY = autojs.bounds.centerY()
+       autojs.clickCenter();
+   } else {
+
+       toast('没有检测到该文字');
+       sleep(1000);
+       toast('没有检测到该文字');
+       sleep(1000);
+   }
+   sleep(3000);
+
+   ocr.release();
+
+   return FY
 }
 
 module.exports = musicAPI;
