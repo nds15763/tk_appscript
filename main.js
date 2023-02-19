@@ -35,24 +35,16 @@ function selectVideoType(type) {
     }
 }
 
-
 //判断视频形式，0:老形式  1:抠图形式
 function normalFlow(vType) {
 
     var postList = GetPostList()
 
     //循环发视频
-    for (let index = 4; index < postList.length; index++) {
+    for (let index = 0; index < postList.length; index++) {
 
         //等待视频生成一分钟，如果不是第一次执行，则再随机等待1~3分钟
         toastLog("等待视频发布，1分钟");
-        //sleep(60000)
-        if (index != 0) {
-            //加个随机数
-            let ran = Math.floor(Math.random() * 120000);
-            toast('点击发送，等待' + ((60000 + ran) / 60000) + '分钟');
-            sleep(60000 + ran);
-        }
 
         //点击发布视频按钮
         clickVideoPost()
@@ -66,6 +58,11 @@ function normalFlow(vType) {
 
         //添加视频内容
         addpost_content(content);
+
+         //加个随机数
+         let ran = Math.floor(Math.random() * 120000);
+         toast('点击发送，等待' + ((60000 + ran) / 60000) + '分钟');
+         sleep(60000 + ran);
     }
 
     // 气泡提示执行结束
@@ -75,9 +72,12 @@ function normalFlow(vType) {
 //判断视频形式，0:老形式  1:抠图形式
 function greanScreenFlow(vType) {
 
+
+    //根据用户名查询该用户的配置
+    //creativeList = httpAPI.getCreativeListByUserName("kimibest_shoper")
+
     //获取本次需要发送的产品ID列
-    //var postList = httpAPI.getproduct_list()
-    var creativeList = [3, 4, 5]
+    var creativeList = [7,8,9,10,11]
 
     //循环发视频
     for (let index = 0; index < creativeList.length; index++) {
@@ -168,123 +168,41 @@ function addvideo_content(video) {
 function GetPostList() {
     //获取文案列表
     return [
-        //昨天的
-        //         {
-        //             "video_content": "Love Charlotte Tilbury\n\
-        // Airbrush Flawless\n\
-        // Setting Spary but ONLY\n\
-        // want to pay a fraction of\n\
-        // the price?I found\n\
-        // something that is as\n\
-        // good as the CT one.",
-        //             "post_content": "It’s been out of stock for sooooo long!Girls,Glow Milk set & Seal Mist is finally back.Don’t miss it again#glowmilkmist #charlottetilbury #ouicherriemist #uk #ukgirly #beautytok #skincare #makeup #uksaving #saving #tiktokmademebuyit #tiktoktrending #tiktokviral",
-        //             "music": "original sound - :)",
-        //             "product_list": ["Glow Milk Set & Seal Mist","Oui Cherie Mist"]
-        //         },
         {
-            "video_content": "Every girl needs this for \nhair loss 💀",
-            "post_content": "Tried this for the first time my hair feels amazing!!!#blackfriday#tiktokshop#tiktokshopfinds#tiktokmademebuyit #rosemaryoil #fyp",
-            "music": "original sound - :)",
-            "product_list": ["Rosemary Oil For Hair 150ml"]
-        },
-        {
-            "video_content": "Love this jumpsuit so\n\
-much!!\n\
-Such nice material\n\
-so flattering and\n\
-such stretchy fits in\n\
-all the right places!!\n\
-And it's ONLY £9.99!!!",
-            "post_content": "Grab yours before it’s gone again!!#foryou #jumpsuit #leggings #clothes #mooslover #clothing #christmas #tiktokmademebuyit #tiktokshop #tiktokshopfinds",
-            "music": "original sound - :)",
-            "product_list": ["[Curlady] Shaping Low Back Bodysuit", "【Ship From UK】Super Soft Jumpsuit 3 Neck Versions"]
-        },
-        {
-            "video_content": " 'nobody cares 1that made by\n\
-mitchell has released a\n\
-brand new valentine's\n\
-mystery box'\n\
-you'reguaranteedtogetan\n\
-item of luggage/storage\n\
-with this box\n\
-🎁😍🙌🏽 ",
-            "post_content": "guys this mystery box looks UNREAL!! you are guaranteed to get an item of luggage/storage 🙌🏽 #fyp #makeup #trending #viral",
-            "music": "original sound - :)",
-            "product_list": ["Made By Mitchell Mystery Make Up Bag"]
-        },
-        {
-            "video_content": "In just 15 minutes a day\n\
-quickly burn body fat\n\
-and help achieve an\n\
-ideal figure These parts\n\
-are easy to disassemble\n\
-and easy to\n\
-store It's reduced from\n\
-£59.99 to £25\n\
-Omg!!! Shocked\n\
-😱😱😰🏃‍♀️🏃‍♂️👇👇",
-            "post_content": "I’ll start using it evening!!😄#fyp #tiktokshop #tiktokshopfinds #weightedhulahoop#weightloss",
-            "music": "original sound - :)",
-            "product_list": ["K-MART (UK Seller) Smart Weighted Hula Hoop", "K-Mart Smart Weighted Hula Hoop Pro with Counter"]
-        },
-        {
-            "video_content": 'Congrats! I’ve been adding rosemary oil to my shampoo. I only wash my hair every other day. I’ve got a patch that has a bunch of new hairs sprouting that’s been bald for years! Really hoping to start seeing results on my hairline soon since it’s worse there',
-            "post_content": "#rosemaryoil #hairloss #diluted #fyp #haircareroutine #tiktokshop #GoforLoveGiftforYou",
+            "video_content": "Totally amazed by how fast my hair is growing thanks to rosemary oil! 🤩",
+            "post_content": "#RosemaryOil #NatureSpell #CrueltyFree #OrganicBeauty #OrganicHairCare #HairGrowth #AntiAging #SkinCare #HealthyHair #HealthySkin #BeautyCare #TikTok #TikTokBeauty #TikTokHair #TikTokSkin#GoforLoveGiftforYou",
             "music": "original sound - :)",
             "product_list": ["rosemary oil"]
         },
         {
-            "video_content": "Made by matchell mystery bag \n\
-￡25 for six prouducts 😍\n\
-worth than ￡70！\n\
-Go for Love Gift for You💞",
-            "post_content": "I brought the £25 mystery bag from @madebymitchell #madebymitchell #makeup#GoforLoveGiftforYou",
+            "video_content": "Achieve perfect skin with Soft Focus Airbrush Concealer - you deserve it! This Valentine's Day, take it home for as low as £11.20!😍",
+            "post_content": "#ValentinesDay #SkinPerfection #Flawless #SoftFocusAirbrushConcealer #HNBCosmetics #GlamorousLook #HighValue #Nourishing #SilkyTexture#GoforLoveGiftforYou",
             "music": "original sound - :)",
-            "product_list": ["Made By Mitchell Mystery Make Up Bag"]
+            "product_list": ["Soft Focus Airbrush Concealer"]
         },
         {
-            "video_content": "How amazing the viral pink honey Superhold Glue !!\n\
-Only £8.99 🤨😮😍",
-            "post_content": "Pink Honey🍯❤ #makeup #fyp #pinkhoneyeyebrows",
-            "music": "original sound - :)",
-            "product_list": ["Original Superhold Honey Glue 28ml"]
-        },
-        //今天的
-        {
-            "video_content": "I love the Rosemary Oil For Hair ! It leaves my hair so soft and smooth, and the oil has a wonderful aroma that makes my hair smell fresh and clean. It has also helped to promote hair growth so my hair is thick and healthy. The oil isn't greasy and it doesn't leave a residue. I love how it makes my hair look more shiny and lustrous. ",
-            "post_content": "Rosemary Oil makes my hair soft, smooth, and full of life",
-            "music": "original sound - :)",
-            "product_list": ["rosemary oil"]
-        },
-        {
-            "video_content": "This mist hydrates my skin, refreshes my makeup, and gives me a glowing, long-lasting freshness. It helps me achieve the ultimate dewy glow.",
-            "post_content": "I absolutely love this ultra-fine dual-phase mist skin! It gives my skin an instant boost of hydration, locking in and refreshing my makeup look. The lightweight formula feels like a soft kiss on my skin, leaving my complexion with a glowing, long-lasting freshness throughout the day. It's enriched with antioxidant hero ingredient Cherry Extract & Vitamin C, as well as soothing Chamomile, which helps to hydrate my skin and minimize my pores. This mist is perfect for all skin types and anyone who wants to achieve the ultimate dewy glow.",
+            "video_content": "The perfect mist for all skin types or for anyone who wants to achieve the ultimate dewy glow！🤩",
+            "post_content": "Stay hydrated and glowing with Oui Cherie Mist! This ultra-fine dual-phase mist gives your skin an instant boost of hydration, locking in and refreshing your makeup look for a long-lastingfreshness..#OuiCherieMist#Hydrating#Refreshing#Antioxidant#DewyGlow#GoforLoveGiftforYou",
             "music": "original sound - :)",
             "product_list": ["Oui Cherie Mist"]
         },
         {
-            "video_content": "I'm satisfied with Original Superhold Honey Glue 28ml -Pink Honey Original as it can provide me with all day/night hold and it's vegan and cruelty-free with complete accessories.Only £8.99 Run！😍",
-            "post_content": "I have been looking for a product to help boost my brows, when I found Original Superhold Honey Glue 28ml -Pink Honey Original, I knew it would give me all day/night hold for the perfect fluffy or laminated look. It is water activated and formulated to create and add texture and fullness to my brows. And it's vegan and cruelty-free, I'm really happy with what I received, there's a Pink Honey Jar 28ml, a Bamboo Spoolie and an Instructions, so complete!",
+            "video_content": "Get the perfect look with WLC Pressed Glitter Pigments, vegan, cruelty free and no glue required – all for just £5.00!😍",
+            "post_content": "Say goodbye to messy glitters with WLC Pressed Glitter Pigments - your perfect choice for a long-lasting, sparkly look all day!",
             "music": "original sound - :)",
-            "product_list": ["Original Superhold Honey Glue 28ml"]
+            "product_list": ["WLC Pressed Glitter Pigments"]
         },
         {
-            "video_content": "I'm so perfect for [Curlady] Shaping Low Back Bodysuit, its adjustable straps and contour cups design make my low back and backless outfit more chic, and it can also effectively flatten my tummy and make me look more attractive and sexy. And its fabric is also very comfortable, it helps keep my body temperature at its best, it's really great!",
-            "post_content": "it makes my low back and backless outfit more chic, and effectively flatten my tummy, the fabric is also very comfortable, it's really great!",
+            "video_content": "😄 Don't want to miss out on your gym results? The 2023 new Curlady shapewear bodysuit can help you lock them in!😊",
+            "post_content": "",
             "music": "original sound - :)",
-            "product_list": ["[Curlady] Shaping Low Back Bodysuit"]
+            "product_list": ["【Curlady】2023 New Shapewear Bodysuit for Women Tummy Control"]
         },
-        // {
-        //     "video_content": "Set and seal makeup with a weightless, alcohol-free formula for hydrated, glowing skin.",
-        //     "post_content": "The Beauty Crop X Amelia Olivia Glow Milk Set & Seal Mist sets and seals makeup with its weightless, alcohol-free formula. Hydrating with Hyaluronic Acid, Panthenol, Glycerin and Rose Water, it's suitable for oily and acne-prone skin. Goodbye melting, creasing and cakey makeup, hello glow, seal and set!😍",
-        //     "music": "original sound - :)",
-        //     "product_list": ["Glow Milk Set & Seal Mist"]
-        // },
         {
-            "video_content": "Velvet Powder Puff gives me a perfect look, with its microfibre surface and sponge insert giving me an impeccable makeup experience!",
-            "post_content": "I've found my long-awaited dream makeup tool - Velvet Powder Puff! Its microfibre surface and sponge insert give me a flawless makeup experience. It not only minimizes pores and reduces shine, but also gives me a perfect look! I especially like its set of two design, and it only costs £13.99! Velvet Powder Puff is definitely a must-have makeup tool for me every day!",
+            "video_content": "Be the star of the night this Valentine's Day with my amazing WLC Pressed Glitter Pigments! 🤩 Get yours now and add a special sparkle to your look - it's only £5.00 💗",
+            "post_content": "Get the wow-factor this Valentine's Day with my go-to WLC Pressed Glitter Pigments! It's a must-have for a show-stopping look and perfect for adding a special sparkle - all for just £5.00! Get yours now and don't miss out on this amazing deal - you'll thank me later! 🤩 #ValentinesDayLook #ValentinesGlam #ValentinesSparkle",
             "music": "original sound - :)",
-            "product_list": ["Velvet Powder Puff"]
+            "product_list": ["WLC Pressed Glitter Pigments"]
         },
     ]
 }
@@ -422,7 +340,8 @@ function selectVideoPixel4(count, vtype) {
     re = musicAPI.checkText("Select")
     if (re != 0) {
         toast('点击next');
-        click(880, re);
+        // click(880, re);
+        click(956, 2131);
         sleep(2000);
     }
 }
@@ -780,19 +699,25 @@ function addpost_contentPixel4(video) {
     for (let pIndex = pList.length; pIndex > 0; pIndex--) {
         let pName = pList[pIndex - 1];
         //点击收回键盘
-        click(850, 750);
+        click(180, 2226);
         console.log('点击收回键盘');
         sleep(2000);
 
         //点击添加产品
-        click(900, 1220);
-        console.log('点击添加产品');
-        sleep(2000);
+        re = musicAPI.checkText("link")
+        if (re == 0) {
+            toast('点击添加产品');
+            click(900, 1220);
+            sleep(2000);
+        }
 
         //点击弹出框添加产品
-        click(360, 1500);
-        console.log('点击弹出框添加产品');
-        sleep(10000);
+        re = musicAPI.checkText("product")
+        if (re == 0) {
+            click(360, 1500);
+            console.log('点击弹出框添加产品');
+            sleep(10000);
+        }
 
         //点击搜索产品
         click(250, 300);

@@ -69,7 +69,7 @@ httpAPI.getVideoByTaskID = function(taskID,times){
                 sleep(1000)
                 break
             }
-            sleep(20000);
+            sleep(30000);
         }else{
             break
         }

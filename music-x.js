@@ -1,11 +1,13 @@
 var musicAPI = {};
-var MLKitOCR = $plugins.load('org.autojs.autojspro.plugin.mlkit.ocr');
+// var MLKitOCR = $plugins.load('org.autojs.autojspro.plugin.mlkit.ocr');
+// importClass(com.googlecode.tesseract.android.TessBaseAPI)
+var TessBaseAPI = require("com.googlecode.tesseract.android.TessBaseAPI");
 
 var isAccess = false;
 //设置音乐
 musicAPI.setMusic = function () {
     //MLKitOCR
-    var ocr = new MLKitOCR();
+    var ocr = new TessBaseAPI();
     if (!isAccess){
         isAccess = requestScreenCapture();
         sleep(2000);
@@ -190,8 +192,10 @@ function findText(ocr, text) {
     let capture = captureScreen();
     // 检测截图文字并计算检测时间，首次检测的耗时比较长
     // 检测时间取决于图片大小、内容、文字数量
-    let result = ocr.detect(capture);
-
+    let result = ocr.getUTF8Text(capture);
+    console.log("findText:")
+    console.log(result)
+    
     let filtered = result.filter(item => item.confidence > 0.6);
     // 模糊搜索文字内容为"Auto.js"的文本结果
     let autojs = filtered.find(item => item.text.includes(text));
@@ -202,7 +206,7 @@ function findText(ocr, text) {
 //设置音乐
 musicAPI.clickText = function (text) {
      //MLKitOCR
-     var ocr = new MLKitOCR();
+     var ocr = new TessBaseAPI();
      if (!isAccess){
          isAccess = requestScreenCapture();
          sleep(2000);
@@ -236,7 +240,7 @@ musicAPI.clickText = function (text) {
 //设置音乐
 musicAPI.checkText = function (text) {
     //MLKitOCR
-    var ocr = new MLKitOCR();
+    var ocr = new TessBaseAPI();
     if (!isAccess){
         isAccess = requestScreenCapture();
         sleep(2000);
