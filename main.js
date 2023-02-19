@@ -758,7 +758,7 @@ function addpost_contentPixel4(video) {
     }
 
     //点击收回键盘
-    click(850, 750);
+    click(200, 2222);
     console.log('点击收回键盘');
     sleep(2000);
 
