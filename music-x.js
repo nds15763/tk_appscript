@@ -1,4 +1,4 @@
-var musicAPI = {};
+// var musicAPI = {};
 // var MLKitOCR = $plugins.load('org.autojs.autojspro.plugin.mlkit.ocr');
 // importClass(com.googlecode.tesseract.android.TessBaseAPI)
 var TessBaseAPI = require("com.googlecode.tesseract.android.TessBaseAPI");
@@ -273,4 +273,4 @@ musicAPI.checkText = function (text) {
    return FY
 }
 
-module.exports = musicAPI;
+// module.exports = musicAPI;

@@ -1,4 +1,4 @@
-var musicAPI = {};
+// var musicAPI = {};
 var MLKitOCR = $plugins.load('org.autojs.plugin.ocr');
 
 var isAccess = false;
@@ -269,4 +269,4 @@ musicAPI.checkText = function (text) {
    return FY
 }
 
-module.exports = musicAPI;
+// module.exports = musicAPI;
