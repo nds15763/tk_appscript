@@ -28,9 +28,11 @@ function checkAccessibilityService(){
 }
 
 function selectVideoType(type) {
+    //0 怼墙拍
     if (type == 0) {
         normalFlow(type)
     } else if (type == 1) {
+        //1 生成视频
         greanScreenFlow(type)
     }
 }
@@ -49,8 +51,10 @@ function normalFlow(vType) {
         //点击发布视频按钮
         clickVideoPost()
         //let video = creativeList[index];
-        //选择一个视频 //这里也需要改，得看模式了,如果模式1的话得新拍一个视频
-        selectVideo(index, vType);
+        //选择一个视频 
+        //selectVideo(index, vType);
+        //改了，现在需要重新拍一个视频
+        newVideo(index,vType)
 
         content = postList[index]
         //添加视频内容
@@ -59,20 +63,28 @@ function normalFlow(vType) {
         //添加视频内容
         addpost_content(content);
 
-         //加个随机数
-         let ran = Math.floor(Math.random() * 120000);
-         toast('点击发送，等待' + ((60000 + ran) / 60000) + '分钟');
-         sleep(60000 + ran);
+        //加个随机数
+        let ran = Math.floor(Math.random() * 120000);
+        toast('点击发送，等待' + ((60000 + ran) / 60000) + '分钟');
+        sleep(60000 + ran);
     }
 
     // 气泡提示执行结束
     toast("执行结束");
 }
 
+function newVideo(){
+        press(537,1827, 6000) //长按6秒拍摄视频
+        sleep(2000)
+        click(954, 1837) //点击对勾
+        console.log('输入产品名称：' + pName);
+        sleep(1000);
+ 
+}
+
+
 //判断视频形式，0:老形式  1:抠图形式
 function greanScreenFlow(vType) {
-
-
     //根据用户名查询该用户的配置
     //creativeList = httpAPI.getCreativeListByUserName("kimibest_shoper")
 
@@ -169,40 +181,40 @@ function GetPostList() {
     //获取文案列表
     return [
         {
-            "video_content": "Totally amazed by how fast my hair is growing thanks to rosemary oil! 🤩",
-            "post_content": "#RosemaryOil #NatureSpell #CrueltyFree #OrganicBeauty #OrganicHairCare #HairGrowth #AntiAging #SkinCare #HealthyHair #HealthySkin #BeautyCare #TikTok #TikTokBeauty #TikTokHair #TikTokSkin#GoforLoveGiftforYou",
+            "video_content": "Ok but how is this Rosemary oil only £7.2?!😲🤩",
+            "post_content": "#tiktokshop#tiktokshopfinds",
             "music": "original sound - :)",
             "product_list": ["rosemary oil"]
         },
         {
-            "video_content": "Achieve perfect skin with Soft Focus Airbrush Concealer - you deserve it! This Valentine's Day, take it home for as low as £11.20!😍",
-            "post_content": "#ValentinesDay #SkinPerfection #Flawless #SoftFocusAirbrushConcealer #HNBCosmetics #GlamorousLook #HighValue #Nourishing #SilkyTexture#GoforLoveGiftforYou",
-            "music": "original sound - :)",
-            "product_list": ["Soft Focus Airbrush Concealer"]
-        },
-        {
-            "video_content": "The perfect mist for all skin types or for anyone who wants to achieve the ultimate dewy glow！🤩",
-            "post_content": "Stay hydrated and glowing with Oui Cherie Mist! This ultra-fine dual-phase mist gives your skin an instant boost of hydration, locking in and refreshing your makeup look for a long-lastingfreshness..#OuiCherieMist#Hydrating#Refreshing#Antioxidant#DewyGlow#GoforLoveGiftforYou",
+            "video_content": "Best setting spray EVERRRR😍",
+            "post_content": "Setting spray is v v v important mwah💦#tiktokshop#tiktokshopfinds",
             "music": "original sound - :)",
             "product_list": ["Oui Cherie Mist"]
         },
         {
-            "video_content": "Get the perfect look with WLC Pressed Glitter Pigments, vegan, cruelty free and no glue required – all for just £5.00!😍",
-            "post_content": "Say goodbye to messy glitters with WLC Pressed Glitter Pigments - your perfect choice for a long-lasting, sparkly look all day!",
+            "video_content": "I'm a fat girl,but I found the best way to lose wight before summer🧐",
+            "post_content": "#tiktokshop#tiktokshopfinds",
             "music": "original sound - :)",
-            "product_list": ["WLC Pressed Glitter Pigments"]
+            "product_list": ["K-Mart Smart Weighted Hula Hoop Pro with Counter"]
         },
         {
-            "video_content": "😄 Don't want to miss out on your gym results? The 2023 new Curlady shapewear bodysuit can help you lock them in!😊",
-            "post_content": "",
+            "video_content": "This is the best Powder Puff on tiktok shop <33 😍",
+            "post_content": "#tiktokshop#tiktokshopfinds",
             "music": "original sound - :)",
-            "product_list": ["【Curlady】2023 New Shapewear Bodysuit for Women Tummy Control"]
+            "product_list": ["Velvet Powder Puff"]
         },
         {
-            "video_content": "Be the star of the night this Valentine's Day with my amazing WLC Pressed Glitter Pigments! 🤩 Get yours now and add a special sparkle to your look - it's only £5.00 💗",
-            "post_content": "Get the wow-factor this Valentine's Day with my go-to WLC Pressed Glitter Pigments! It's a must-have for a show-stopping look and perfect for adding a special sparkle - all for just £5.00! Get yours now and don't miss out on this amazing deal - you'll thank me later! 🤩 #ValentinesDayLook #ValentinesGlam #ValentinesSparkle",
+            "video_content": "Every girl needs this bag <33 😍 so cute🤩",
+            "post_content": "#tiktokshop#tiktokshopfinds",
             "music": "original sound - :)",
-            "product_list": ["WLC Pressed Glitter Pigments"]
+            "product_list": ["F8257 Luggage Small Bag Women's Crossbody"]
+        },
+        {
+            "video_content": "Ok but this suit will make him fall deep in love w u😍",
+            "post_content": "#tiktokshop#tiktokshopfinds",
+            "music": "original sound - :)",
+            "product_list": ["[Curlady] 2023 New Women Shaping Bodysuit Tummy Control Shapewear"]
         },
     ]
 }

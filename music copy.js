@@ -1,9 +1,11 @@
 var musicAPI = {};
-var isAccess = false;
-var ocrAPI = require('ocr.js');
+var MLKitOCR = $plugins.load('org.autojs.plugin.ocr');
 
+var isAccess = false;
 //设置音乐
 musicAPI.setMusic = function () {
+    //MLKitOCR
+    var ocr = new MLKitOCR();
     if (!isAccess){
         isAccess = requestScreenCapture();
         sleep(2000);
@@ -60,7 +62,7 @@ function setMusicPixel3(ocr) {
 }
 
 function setMusicPixel4(ocr) {
-    re = ocrAPI.findText(ocr,"Sounds")
+    re = findText(ocr,"Sounds")
     if (re){
         musicAPI.clickText("Sounds")
     }else{
@@ -158,7 +160,7 @@ function setMusicOther(ocr) {
 function clickToFavMusicPage(ocr) {
     let autojs = {}
     for (let i = 0; i < 5; i++) {
-        autojs = ocrAPI.findText(ocr, "Favorites")
+        autojs = findText(ocr, "Favorites")
         if (autojs) {
             break;
         }
@@ -184,6 +186,18 @@ function clickToFavMusicPage(ocr) {
     return FY
 }
 
+function findText(ocr, text) {
+    let capture = captureScreen();
+    // 检测截图文字并计算检测时间，首次检测的耗时比较长
+    // 检测时间取决于图片大小、内容、文字数量
+    let result = ocr.detect(capture);
+
+    let filtered = result.filter(item => item.confidence > 0.6);
+    // 模糊搜索文字内容为"Auto.js"的文本结果
+    let autojs = filtered.find(item => item.text.includes(text));
+    console.log(autojs);
+    return autojs
+}
 
 //设置音乐
 musicAPI.clickText = function (text) {
@@ -195,7 +209,7 @@ musicAPI.clickText = function (text) {
      }
     let autojs = {}
     for (let i = 0; i < 5; i++) {
-        autojs = ocrAPI.findText(ocr, text)
+        autojs = findText(ocr, text)
         if (autojs) {
             break;
         }
@@ -229,7 +243,7 @@ musicAPI.checkText = function (text) {
     }
    let autojs = {}
    for (let i = 0; i < 5; i++) {
-       autojs = ocrAPI.findText(ocr, text)
+       autojs = findText(ocr, text)
        if (autojs) {
            break;
        }
